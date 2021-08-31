@@ -29,7 +29,7 @@ module Queries
 
           it 'fails' do
             data = execute.dig('data', 'showUser')
-            error_message =  execute.dig('errors').first['message']
+            error_message =  execute.dig('errors').first
 
             expect(data).to be_nil
             expect(error_message).to eq 'You are not authorized to perform this action'

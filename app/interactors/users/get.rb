@@ -6,8 +6,6 @@ module Users
     
     def call
       context.user = User.find(id)
-    rescue ActiveRecord::RecordNotFound => e
-      context.fail! messages: [e.message]
     end
   end
 end

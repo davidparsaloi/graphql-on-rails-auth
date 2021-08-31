@@ -13,14 +13,5 @@ module Types
     def full_name
       [object.first_name, object.last_name].compact.join(' ')
     end
-
-    def self.authorized?(object, context)
-      super &&
-        allowed_to?(
-          :show?,
-          object,
-          context: { user: context[:current_user] }
-        )
-    end
   end
 end

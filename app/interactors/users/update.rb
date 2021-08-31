@@ -7,6 +7,7 @@ module Users
     def call
       if user.update attributes
         context.user = user
+        context.message = 'User updated successfully'
       else
         context.fail! messages: user.errors.full_messages, user: nil
       end

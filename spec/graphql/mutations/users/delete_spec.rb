@@ -58,7 +58,7 @@ RSpec.describe Mutations::Users::Delete, type: :request do
         json = JSON.parse(response.body)
 
         data = json.dig('data', 'updateUser')
-        error_message = json.dig('errors').first['message']
+        error_message = json.dig('errors').first
 
         expect(data).to be_nil
         expect(error_message).to eq 'You are not authorized to perform this action'

@@ -13,21 +13,12 @@ class GraphqlOnRailsSchema < GraphQL::Schema
   # Turn off introspection entry points __schema && __type
   disable_introspection_entry_points if Rails.env.production?
 
-  # When `authorized?` returns false for an object
-  def self.unauthorized_object(_error)
-    raise GraphQL::ExecutionError, 'You are not authorized to perform this action'
+  rescue_from(ActionPolicy::Unauthorized) do |err|
+    raise GraphQL::ExecutionError.new(err.result.message)
   end
 
-  rescue_from(ActionPolicy::Unauthorized) do |err|
-    raise GraphQL::ExecutionError.new(
-      # use result.message (backed by i18n) as an error message
-      err.result.message,
-      # use GraphQL error extensions to provide more context
-      extensions: {
-        code: :unauthorized,
-        fullMessages: err.result.reasons.full_messages,
-        details: err.result.reasons.details
-      }
-    )
+  rescue_from(ActiveRecord::RecordNotFound) do |err, obj, args, ctx, field|
+    binding.pry
+    raise GraphQL::ExecutionError, err
   end
 end

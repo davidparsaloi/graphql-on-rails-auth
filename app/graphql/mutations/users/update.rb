@@ -8,6 +8,7 @@ class Mutations::Users::Update < Mutations::BaseMutation
 
   field :user, Types::UserType, null: true
   field :errors, [String], null: true
+  field :message, String, null: true
 
   def resolve(user_id:, **args)
     user = ::Users::Get.call(id: user_id).user
@@ -18,7 +19,8 @@ class Mutations::Users::Update < Mutations::BaseMutation
 
     {
       user: result.user,
-      errors: result.messages
+      errors: result.messages,
+      message: result.message
     }
   end
 end
