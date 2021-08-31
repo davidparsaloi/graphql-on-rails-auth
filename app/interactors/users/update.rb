@@ -5,12 +5,9 @@ module Users
     delegate :user, :attributes, to: :context
 
     def call
-      if user.update attributes
-        context.user = user
-        context.message = 'User updated successfully'
-      else
-        context.fail! messages: user.errors.full_messages, user: nil
-      end
+      user.update! attributes
+      context.user = user
+      context.message = 'User updated successfully'
     end
   end
 end

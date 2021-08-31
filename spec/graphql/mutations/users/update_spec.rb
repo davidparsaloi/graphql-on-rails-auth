@@ -34,10 +34,11 @@ RSpec.describe Mutations::Users::Update, type: :request do
           execute
 
           json = JSON.parse(response.body)
-          data = json.dig('data', 'updateUser')
+          user  = json.dig('data', 'updateUser')
+          errors  = json.dig('errors')
 
-          expect(data['errors']).to eq ['Email is invalid']
-          expect(data['user']).to be_nil
+          expect(errors).to eq [{"email"=>["is invalid"]}]
+          expect(user).to be_nil
         end
       end
     end

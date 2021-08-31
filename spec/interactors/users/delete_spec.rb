@@ -33,18 +33,7 @@ module Users
         end
 
         it 'fails' do
-          expect(context).to be_a_failure
-        end
-
-        it 'does not delete the user record' do
-          context
-
-          expect(user).not_to be_destroyed
-        end
-
-        it 'returns an error message' do
-          expect(context.errors).to eq error_message
-          expect(context.message).to be_nil
+          expect { context }.to raise_error(ActiveRecord::RecordNotDestroyed, 'Record Not Destroyed')
         end
       end
     end

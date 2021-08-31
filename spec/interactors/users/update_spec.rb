@@ -27,15 +27,7 @@ module Users
       let(:error_message) { ['Email is invalid'] }
 
       it 'fails' do
-        expect(context).to be_a_failure
-      end
-
-      it 'returns an error message' do
-        expect(context.messages).to eq error_message
-      end
-
-      it 'returns nil user' do
-        expect(context.user).to be_nil
+        expect { context }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Email is invalid')
       end
     end
   end
